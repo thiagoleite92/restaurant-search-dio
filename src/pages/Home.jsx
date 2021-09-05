@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import TextField, { Input } from '@material/react-text-field';
 import MaterialIcon from '@material/react-material-icon';
-import Slider from "react-slick";
 import logo from '../assets/logo.svg'
 import resFake from '../assets/restaurante-fake.png'
 import {
@@ -13,10 +12,11 @@ import {
   Carousel,
   CarouselTitle
 } from './style'
-import { ImageCard } from '../components/'
+import { ImageCard, RestaurantCard, Modal } from '../components/'
 
 const Home = () => {
   const [inputValue, setInputValue] = useState('');
+  const [modalOpened, setModalOpened] = useState(false);
 
   const settings = {
     dots: false,
@@ -60,8 +60,10 @@ const Home = () => {
             <ImageCard photo={resFake} />
           </Carousel>
         </Search>
+        <RestaurantCard />
       </Container>
       <Map />
+      <Modal open={ modalOpened } onClose={ () => setModalOpened(!modalOpened)} />
     </Wrapper>
   )
 };
