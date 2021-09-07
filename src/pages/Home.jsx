@@ -8,14 +8,14 @@ import {
   Search,
   Logo,
   Wrapper,
-  Map,
   Carousel,
   CarouselTitle
 } from './style'
-import { ImageCard, RestaurantCard, Modal } from '../components/'
+import { ImageCard, RestaurantCard, Modal, Map } from '../components/'
 
 const Home = () => {
   const [inputValue, setInputValue] = useState('');
+  const [query, setQuery] = useState('');
   const [modalOpened, setModalOpened] = useState(false);
 
   const settings = {
@@ -27,6 +27,12 @@ const Home = () => {
     adaptiveHeight: true,
   };
 
+  function handleKeyPress(event) {
+    if (event.key === 'Enter') {
+      setQuery(inputValue);
+    }
+  }
+
   return (
     <Wrapper>
       <Container>
@@ -37,9 +43,12 @@ const Home = () => {
             outlined
             onTrailingIconSelect={() => this.setState({ value: '' })}
             trailingIcon={<MaterialIcon role="button" icon="search" />}
-          ><Input
+          >
+            <Input
               value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)} />
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyPress={handleKeyPress}
+            />
           </TextField>
           <CarouselTitle>Na Sua Área</CarouselTitle>
           <Carousel {...settings}>
@@ -62,7 +71,7 @@ const Home = () => {
         </Search>
         <RestaurantCard />
       </Container>
-      <Map />
+      <Map query={ query } />
       <Modal open={ modalOpened } onClose={ () => setModalOpened(!modalOpened)} />
     </Wrapper>
   )
